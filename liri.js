@@ -1,6 +1,4 @@
-// console.log(process.argv);
-
-var dotenv = require("dotenv").config();
+require("dotenv").config();
 
 //Require "fs" in order to access text documents
 var fs = require("fs");
@@ -18,8 +16,6 @@ var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 
 var spotify = new Spotify(keys.spotify);
-
-console.log(keys);
 
 //Take in the command arguement
 var command = process.argv[2];
@@ -42,7 +38,7 @@ function runCommand() {
             }
         }
         //Call to Bands In Town API
-        var queryUrl = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=" + keys.bandsintown;
+        var queryUrl = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
         axios.get(queryUrl).then(
             function (response) {
                 //Limit responses
@@ -55,7 +51,7 @@ function runCommand() {
             }
         );
     } else if (command === "spotify-this-song") {
-        //Spotify Code THIS DOESN'T WORK
+        //Spotify Code 
         var song = "";
         for (var i = 3; i < nodeArgs.length; i++) {
             if (i > 3 && i < nodeArgs.length) {
@@ -65,7 +61,10 @@ function runCommand() {
                 song += nodeArgs[i];
             }
         }
-        spotify.search({type: "track", query: song, limit: 1}, function(err, data) {
+        if (song === "") {
+            song = "The Sign Ace of Base";
+        }
+        spotify.search({type: "track", query: song, limit: 2}, function(err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
               }
@@ -81,14 +80,14 @@ function runCommand() {
             if (i > 3 && i < nodeArgs.length) {
                 movieName = movieName + "+" + nodeArgs[i];
             }
-            // else if (i < 3) {
-            //     movieName = "Mr. Nobody";
-            // }
             else {
                 movieName += nodeArgs[i];
             }
         }
-        var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + keys.omdb;
+        if (movieName === "") {
+            movieName = "Mr. Nobody";
+        }
+        var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
         axios.get(queryUrl).then(
             function (response) {
                 // Then we print out the imdbRating
@@ -108,18 +107,9 @@ function runCommand() {
                 return console.log(error);
             }
             var output = data.split(",");
-            for (var i = 0; i < output.length; i++) {
-                // Print each element (item) of the array/
-                // let spotifyArr = output.slice(0, 2);
-                // console.log(spotifyArr);
-                // console.log(output[i]);
-            }
-            let spotifyArr = output.slice(0, 2);
-            console.log(spotifyArr);
-            command = spotifyArr[0];
-            console.log(command);
-            nodeArgs.push(spotifyArr[1]);
-            console.log(nodeArgs, "nodeArgs");
+            command = output[0];
+            nodeArgs.push(output[1]);
+            runCommand();
         })
     }
 }
