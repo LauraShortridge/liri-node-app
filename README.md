@@ -11,5 +11,4 @@ Axios is used for the OMDB and Bands In Town APIs.
 
 ### Here is a video that demonstrates this app:
 
-https://drive.google.com/open?id=1mP-1T56GhSHDxyR4ZMNjeZ5qGLwcyPHc - automatic!
-[Demo on Google Drive](https://drive.google.com/open?id=1mP-1T56GhSHDxyR4ZMNjeZ5qGLwcyPHc)
+https://drive.google.com/open?id=1mP-1T56GhSHDxyR4ZMNjeZ5qGLwcyPHc
